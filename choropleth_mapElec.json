@@ -1,46 +1,41 @@
 {
-    "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
-    "title": "Global Use of Electricty Sourced from Fossil Fuels",
-    "width": 800,
-    "height": 500,
-    "data": {
-      "url": "https://github.com/stingyblingy/Week9Homework/blob/main/global.geo%20(1).json",
-      "format": {"type": "topojson", "feature": "VIC_LGA_POLYGON_SHP_GDA2020"}
-    },
-    "transform": [
-      {
-        "lookup": "properties.name",
-        "from": {
-          "data": {
-            "url": "https://github.com/stingyblingy/Week9Homework/blob/main/Country_data.csv"
-          },
-          "key": "Country Name",
-          "fields": ["Rate per 100,000 population"]
-        }
-      }
-    ],
-    "projection": {"type": "equirectangular"},
-    "mark": {"type": "geoshape"},
-    "encoding": {
-      "color": {
-        "field": "Rate per 100,000 population",
-        "type": "quantitative",
-        "scale": {"type": "linear", "domain": [0, 20000], "scheme": "lightorange"},
-        "legend": {
-          "orient": "top-right",
-          "direction": "horizontal",
-          "gradientLength": 250
-        }
-      },
-      "tooltip": [
-        {
-          "field": "properties.name",
-          "type": "nominal",
-          "title": "Local Government Area"
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": "Global Use of Electricty Sourced from Fossil Fuels",
+  "width": 800,
+  "height": 500,
+    "projection": {"type": "equalEarth"},
+  "data": {
+    "url": "https://raw.githubusercontent.com/stingyblingy/Week9Homework/main/global.topojson",
+    "format": {"type": "topojson", "feature": "global.geo"}
+  },
+  "transform": [
+    {
+      "lookup": "properties.name",
+      "from": {
+        "data": {
+          "url": "https://raw.githubusercontent.com/stingyblingy/Week9Homework/main/Country_data.csv"
         },
-        {"field": "Rate per 100,000 population", "type": "quantitative"}
-      ]
-    },
-    "config": {}
-  }
-  
+        "key": "CountryName",
+        "fields": ["Electricity-fromfossilfuels"]
+      }
+    }
+  ],
+  "mark": {"type": "geoshape"},
+  "encoding": {
+    "color": {
+      "field": "Electricity-fromfossilfuels",
+      "type": "quantitative",
+      "scale": {
+        "type": "threshold",
+        "domain": [25,50,75,100],
+        "range":["#fdbe85","#fd8d3c","#e6550d","#a63603","#662203"]
+      },
+      "legend": {
+        "orient": "top-right",
+        "direction": "horizontal",
+        "gradientLength": 250
+      }
+    }
+  },
+  "config": {}
+}
